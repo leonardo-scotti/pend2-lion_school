@@ -168,6 +168,16 @@ main {
     text-shadow: 0px 4px 4px #00000040;
 }
 
+.profile {
+    width: 180px;
+    height: 180px;
+}
+
+.profile img {
+    width: 100%;
+    border-radius: 50%;
+}
+
 /* STUDENT */
 #student {
     display: flex;

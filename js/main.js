@@ -50,34 +50,39 @@ async function createHome() {
 }
 
 async function createCardCourse() {
-    const classes = document.createElement('div')
-    classes.classList.add('classes')
+    try {
+        const classes = document.createElement('div')
+        classes.classList.add('classes')
 
-    const allCourses = await listAllCourses()
+        const allCourses = await listAllCourses()
 
-    allCourses.forEach(course => {
-        const card = document.createElement('a')
-        card.classList.add('class')
+        allCourses.forEach(course => {
+            const card = document.createElement('a')
+            card.classList.add('class')
 
-        const img = document.createElement('img')
-        if(course.sigla == 'DS') {
-            img.src = './assets/dev.svg'
-        } else {
-            img.src = './assets/redes.svg'
-        }
-        
-        const nameCourse = document.createElement('span')
-        nameCourse.textContent = course.sigla
+            const img = document.createElement('img')
+            if (course.sigla == 'DS') {
+                img.src = './assets/dev.svg'
+            } else {
+                img.src = './assets/redes.svg'
+            }
 
-        card.append(img, nameCourse)
-        classes.appendChild(card)
+            const nameCourse = document.createElement('span')
+            nameCourse.textContent = course.sigla
 
-        card.addEventListener('click', () => {
-            createStudentsClass(course)
-        })
-    });
+            card.append(img, nameCourse)
+            classes.appendChild(card)
 
-    return classes
+            card.addEventListener('click', () => {
+                createStudentsClass(course)
+            })
+        });
+
+        return classes
+    } catch (error) {
+        console.log("API fora do ar")
+    }
+
 }
 
 async function createStudentsClass(course) {
