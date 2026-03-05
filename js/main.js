@@ -16,37 +16,42 @@ document.getElementById('logo').addEventListener('click', () => {
 // })
 
 async function createHome() {
-    const cardCourses = await createCardCourse()
+    try {
+        const cardCourses = await createCardCourse()
 
-    const main = document.getElementById('main')
-    main.replaceChildren()
+        const main = document.getElementById('main')
+        main.replaceChildren()
 
-    const home = document.createElement('section')
-    home.id = 'home'
-    main.appendChild(home)
+        const home = document.createElement('section')
+        home.id = 'home'
+        main.appendChild(home)
 
-    const slogan = document.createElement('div')
-    slogan.classList.add('slogan')
-    home.appendChild(slogan)
+        const slogan = document.createElement('div')
+        slogan.classList.add('slogan')
+        home.appendChild(slogan)
 
-    const spanCurso = document.createElement('span')
-    spanCurso.textContent = 'curso '
+        const spanCurso = document.createElement('span')
+        spanCurso.textContent = 'curso '
 
-    const textSlogan = document.createElement('p')
-    textSlogan.textContent = `Escolha um `
-    const restTextSlogan = 'para gerenciar'
-    textSlogan.append(spanCurso, restTextSlogan)
-    slogan.appendChild(textSlogan)
+        const textSlogan = document.createElement('p')
+        textSlogan.textContent = `Escolha um `
+        const restTextSlogan = 'para gerenciar'
+        textSlogan.append(spanCurso, restTextSlogan)
+        slogan.appendChild(textSlogan)
 
-    const imgSlogan = document.createElement('img')
-    imgSlogan.src = './assets/devices.svg'
-    slogan.appendChild(imgSlogan)
+        const imgSlogan = document.createElement('img')
+        imgSlogan.src = './assets/devices.svg'
+        slogan.appendChild(imgSlogan)
 
-    const imgMain = document.createElement('img')
-    imgMain.src = './assets/studant.svg'
-    home.appendChild(imgMain)
+        const imgMain = document.createElement('img')
+        imgMain.src = './assets/studant.svg'
+        home.appendChild(imgMain)
 
-    home.appendChild(cardCourses)
+        home.appendChild(cardCourses)
+    } catch (error) {
+
+    }
+
 }
 
 async function createCardCourse() {
@@ -113,7 +118,7 @@ async function createCardsStudents(id) {
     const studentsByCourse = await listAllStudentsByIdClass(id)
 
     studentsByCourse.forEach(student => {
-        const cardStudent = document.createElement('div')
+        const cardStudent = document.createElement('a')
         cardStudent.classList.add('card-student')
 
         const profile = document.createElement('div')
@@ -128,10 +133,41 @@ async function createCardsStudents(id) {
         name.textContent = String(student.nome).toUpperCase()
         cardStudent.appendChild(name)
 
+        cardStudent.addEventListener('click', () => {
+            createAreaStudent(student)
+        })
+
         cardsStudents.appendChild(cardStudent)
     })
 
     return cardsStudents
+}
+
+async function createAreaStudent(student) {
+    const main = document.getElementById('main')
+    main.replaceChildren()
+
+    const secStudent = document.createElement('section')
+    secStudent.id = 'student'
+    main.appendChild(secStudent)
+
+    const user = document.createElement('div')
+    user.classList.add('user')
+    secStudent.appendChild(user)
+
+    const img = document.createElement('img')
+    img.src = student.foto
+    user.appendChild(img)
+
+    const nameUser = document.getElementById('p')
+    nameUser.textContent = String(student.nome).toUpperCase()
+    user.appendChild(nameUser)
+
+    const performance = document.createElement('div')
+    performance.classList.add('performance')
+    secStudent.appendChild(performance)
+
+    
 }
 
 listAllStudents()
